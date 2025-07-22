@@ -2,9 +2,9 @@
 theme: dracula
 ---
 
-# 生成AIとエンジニアの仕事と私~実践知を添えて~
+# 生成AIアプリのプロトタイピングサイクルを効率よく回す ClaudeCode活用術
 
-2025/06/13 【ORION × スマレジ共催】生成AI時代に考えるエンジニアのキャリア会議
+2025/07/25 kansai.ts#11
 
 ---
 layout: author
@@ -12,9 +12,9 @@ layout: author
 
 ![icon](./images/icon.png)
 
-## いずりょー / is_ryo 
+## いずりょー / is_ryo
 
-#EngineeringManager@Sprocket
+#PdM, EngineeringManager@Sprocket
 
 #TypeScriptが好き #JavaScriptは嫌い
 
@@ -28,51 +28,7 @@ X → @is_ryo
 layout: section
 ---
 
-# 生成AI活用してますか？
-
----
----
-
-# 簡単にアンケート取りたい
-
-<div text-2xl>
-
-1. あまり活用できていない…
-
-2. 少し質問するくらいで使っている
-
-3. 開発業務に取り入れている(Copilot, Clineなど)
-
-4. それ以外の業務にも取り入れている(資料作成など)
-
-5. 生成AIないと生きていけないっ！！！(仕事できない)
-
-</div>
-
----
----
-
-# ちなみに私は…
-
-<div text-2xl>
-
-1. あまり活用できていない…
-
-2. 少し質問するくらいで使っている
-
-3. 開発業務に取り入れている(Copilot, Clineなど)
-
-4. それ以外の業務にも取り入れている(資料作成など)
-
-<div font-bold underline>5. 生成AIないと生きていけないっ！！！(仕事できない)</div>
-
-</div>
-
-<br />
-
-<div font-bold text-4xl >
-生成AI取り上げられたらエンジニア辞めちゃうんじゃないかというくらい、生成AIが仕事と強く依存している
-</div>
+# 前提
 
 ---
 ---
@@ -81,23 +37,19 @@ layout: section
 
 <div text-2xl>
 
-- <div leading-relaxed>主にClaude、Geminiを利用している</div>
+- <div leading-relaxed>生成AIプロダクトを開発・リリースしている</div>
 
-  - <div leading-relaxed>エンジニアだけでなく非エンジニアも一定数活用している</div>
+- <div leading-relaxed>生成AIを活用してどんな課題を解決してほしいのかユーザー側の解像度がまだまだ低い</div>
 
-  - <div leading-relaxed>エンジニアはRooCode、ClaudeCodeとか、非エンジニアはClaudeのWebアプリとか</div>
+- <div leading-relaxed>どんな生成AIを活用したソリューションが求められているのかを把握するためにプロトタイピングが重要</div>
+  
+  - <div leading-relaxed>プロトタイプを作る→試す→評価するのサイクルをいかに早く回すか</div>
 
-  - <div leading-relaxed>ClaudeProjectを活用して生成AIアプリみたいなものを作っている</div>
+  - <div leading-relaxed>生成AIをうまく活用してサイクルを回す速度を上げたい</div>
 
-- <div leading-relaxed>コーディング作業はすべてRooCodeに任せるべく試行錯誤中</div>
+- <div leading-relaxed>ClaudeCodeを使ってプロトタイピングをやる個人的Tipsを紹介していく</div>
 
-- <div leading-relaxed>Devinにより技術的負債の解消を実験的に行っている</div>
-
-- <div leading-relaxed>社内外向けに生成AIエージェントの開発をしている</div>
-
-  - <div leading-relaxed>社内向けは割と実験場として好き勝手やっている</div>
-
-  - <div leading-relaxed>生成AIプロダクトの開発を進めている</div>
+  - <div leading-relaxed>プロトタイピングに限らず普段の開発でも一定役立つかも…</div>
 
 </div>
 
@@ -108,220 +60,135 @@ layout: center
 <div font-bold text-5xl leading-relaxed>今日は私自身の経験談からお話します。<br />※すべて個人の意見です。</div>
 
 ---
+layout: section
+---
+
+# 今日伝えたいこと
+
+---
+layout: section
+---
+
+# 生成AIに<strong>何を伝えるか</strong>が9割
+
+---
+---
+
+# 生成AIに<strong>何を伝えるか</strong>が9割
+
+<div text-2xl>
+
+- <div leading-relaxed>生成AIに持たせるコンテキストはどんな情報でどんな粒度なのかで、アウトプットの質が9割決まると思っている</div>
+
+  - <div leading-relaxed>プロンプトエンジニアリングじゃなくてコンテキストエンジニアリングという概念が流行っているらしい</div>
+
+- <div leading-relaxed>作業する中で都度知っておいてほしいコンテキストもあるし、特定の作業のときだけでいいコンテキストもある</div>
+
+- <div leading-relaxed>ClaudeCodeはこういったコンテキストの渡し方についてもHackableなので、色々工夫できる</div>
+
+- <div leading-relaxed>今日はその中で最近個人的流行りのTipsを紹介します</div>
+
+</div>
+
+---
+---
+
+# 本日紹介するTips
+
+<div text-4xl>
+
+1. CLAUDE.mdを整備する
+
+2. ガードレールを引く
+
+3. kiro的アプローチ
+
+4. サンプルコードを用意する
+
+</div>
+
+---
+---
+
+# CLAUDE.mdを整備する
+
+<div text-2xl>
+
+- <div leading-relaxed>ClaudeCodeを使ったことがある人ならみんなやってるだろうけど、これが結構重要だったりする</div>
+
+- <div leading-relaxed><code>/init</code>ですでにあるコードを読み込んである程度の仕様書だったり、ルールを作成してくれる</div>
+
+- <div leading-relaxed>作成してくれたCLAUDE.mdを確認して、細かいところを調整している</div>
+
+  - <div leading-relaxed>「(このあと詳細を説明しますが)作業するときはこのドキュメントを理解してから作業に入る」とか</div>
+
+  - <div leading-relaxed>「こういう場合はユーザーに確認すること」とか</div>
+
+  - <div leading-relaxed><code>#</code>をつけてclaudeに指示するとCLAUDE.mdに追記してくれる</div>
+
+</div>
+
+---
+---
+
+# ガードレールを引く
+
+
+<div text-2xl>
+
+- <div leading-relaxed>ガードレール = 約束事・制約を用意してClaudeCodeが生成するコードの品質を一定担保する</div>
+
+- <div leading-relaxed>コーディング規約やスタイルガイド、設計思想などをMarkdownに書いておき、これらを理解させて作業させる</div>
+
+  - <div leading-relaxed>「エラーハンドリングの記述例をTSで書いておく」とか「SOLID原則にしたがった構成にしなさい」とかスコープは様々</div>
+
+- <div leading-relaxed>「<strong>book</strong>」という概念でClaudeCodeに読み込ませている</div>
+
+  - <div leading-relaxed>bookというディレクトリを用意して、index.mdに目次を書いておき、ClaudeCodeはこの目次から必要な情報を取得してコンテキストとして理解することができる</div>
+
+</div>
+
+---
+---
+
+# kiro的アプローチ
+
+
+<div text-2xl>
+
+- <div leading-relaxed>最近AWSから出たIDE「Kiro」のアプローチを真似たcommandを作って、設計やタスク分解をさせてから作業をさせている</div>
+
+  - <div leading-relaxed><code>./.claude/commands/{command_name}</code>以下にMarkdownなどを配置しておくと<code>/command_name hogehoge</code>という形でカスタムコマンドを用意できる</div>
+
+- <div leading-relaxed>Kiroは<strong>設計力</strong>に強みを持っているので、その強みをcommandとして移植した</div>
+
+- <div leading-relaxed><code>/kiro チャットUIを実装して</code>と依頼すると、要件定義→設計→タスク分解をユーザーに確認を求めながらドキュメントを作成し、作業を実行するようにできる</div>
+
+  - <div leading-relaxed>今のところこのやり方をしていると行ってほしい方向に実装をしてくれる確率がグッと上がっている</div>
+
+</div>
+
+---
+---
+
+# サンプルコードを用意する
+
+
+<div text-2xl>
+
+- <div leading-relaxed>まだ新しいパッケージの利用方法とか、個別で作っているMCPサーバーへのアクセス方法などについてはサンプルコードを用意して、それを生成AIに伝えるようにしています</div>
+
+- <div leading-relaxed>こうすることで古い情報や誤った情報に振り回されて失敗を繰り返すことを回避できる</div>
+
+- <div leading-relaxed>そこまでしっかり書かなくても良くて、ある程度省略した書き方をしていてもうまくいくケースが多い</div>
+
+</div>
+
+---
 layout: center
 ---
 
-<div font-bold text-5xl leading-relaxed>エンジニアとしての仕事が<br/>どう変わったか？</div>
-
----
----
-
-# エンジニアとしての仕事がどう変わったか？
-
-<div text-2xl>
-
-1. コードを(ほぼ)書かなくなった
-
-2. レビューの時間が減った
-
-3. 設計も生成AIとやるようになった
-
-4. 新しい知見を生成AI経由で得るようになった
-
-5. 生成AIをどう活用すると効果的か考えることに時間を使うようになった
-
-</div>
-
----
----
-
-# コードを(ほぼ)書かなくなった
-
-<div text-2xl>
-
-- <div leading-relaxed>何よりアウトプットを出す速度が早すぎるので、コードを書くという作業は人間がやる必要がなくなった</div>
-
-- <div leading-relaxed>最初は一つの関数とかテストとか一部のコードを書いてもらう程度だったが、この半年でかなり賢くなったので、もうアプリケーション丸ごと任せられるくらいになっている</div>
-
-- <div leading-relaxed>エンジニアじゃなくてもPoCレベルのアプリケーション作れちゃう世界が来ている</div>
-
-  - <div leading-relaxed>例) 弊社のPdMは非エンジニアだが、週に1,2個くらいプロトタイプ作ることが可能になっていた</div>
-
-</div>
-
----
----
-
-# レビューの時間が減った
-
-<div text-2xl>
-
-- <div leading-relaxed>一次レビューは生成AIに任せるようになってきた</div>
-
-- <div leading-relaxed>ある意味機械的に判断できるような指摘内容は生成AIがしてくれるので、その前提で人間がレビューできるようになった</div>
-
-  - <div leading-relaxed>BiomeでLintとFormatして生成AIでの一次レビューが通ってから、人間がレビューする</div>
-
-- <div leading-relaxed>コード規約や設計思想など、開発組織で定めているルールをコンテキストとして生成AIに渡して、どういう観点でレビューしてほしいかをプロンプトで書いて、チューニングしてを繰り返している</div>
-
-- <div leading-relaxed>これがプロンプト芸、否、プロンプトエンジニアリングか…となっている</div>
-
-</div>
-
----
----
-
-# 設計も生成AIとやるようになった
-
-<div text-2xl>
-
-- <div leading-relaxed>アプリケーションの設計も生成AIとやるようになった</div>
-
-- <div leading-relaxed>まず設計書に重要なことを書いて、生成AIに校閲してもらう</div>
-
-- <div leading-relaxed>インターネットに転がっているプラクティスを参照して、様々なパターンを提案してくれる。しかも非現実的な速度で…</div>
-
-- <div leading-relaxed>生成AIに設計書を作らせて、それを次のタスクに渡してアプリケーションを実装させることをよくやっている</div>
-
-</div>
-
----
----
-
-# 新しい知見を生成AI経由で得るようになった
-
-<div text-2xl>
-
-- <div leading-relaxed>先程の話にもつながるが、ふとしたタイミングで自分の知らない知見を得る機会が増えた</div>
-
-  - <div leading-relaxed>新しい言語やフレームワークなどの知見</div>
-
-  - <div leading-relaxed>クラウドサービスなどのアップデート情報</div>
-
-- <div leading-relaxed>半年前に比べて生成AIが参照できる情報の鮮度・精度が上がってきている</div>
-
-  - <div leading-relaxed>Web検索するのが当たり前になってきた</div>
-
-</div>
-
----
----
-
-# 生成AIをどう活用すると効果的か考えることに時間を使うようになった
-
-<div text-2xl>
-
-- <div leading-relaxed>人間の生産性は生成AIによって爆発的に向上した</div>
-
-- <div leading-relaxed>が、生成AI自体の生産性ももっと上げられると掛け算的に全体的な生産性が向上できそう</div>
-
-- <div leading-relaxed>ということで生成AIの生産性みたいなことを考えるようになってきた</div>
-
-- <div leading-relaxed>プロンプトでどんな情報を投げるか、どこまでのコンテキストを持たせておくべきかみたいなことを考えながら試行錯誤している</div>
-  
-</div>
-
----
-layout: center
----
-
-<div font-bold text-5xl leading-relaxed>これからどういう<br />エンジニアが求められるか</div>
-
----
----
-
-# これからのエンジニアに何が求められるか
-
-<div text-2xl>
-
-1. コーディング力よりも設計力
-
-2. 高い表現能力、言語化能力
-
-3. 生成AIを活用した業務・組織設計力
-
-4. 生成AIを組織に広める活動
-
-</div>
-
----
----
-
-# コーディング力よりも設計力
-
-<div text-2xl>
-
-- <div leading-relaxed>コードを書く能力では勝てない…ので任せた方がいい</div>
-
-  - <div leading-relaxed>うまく対応できない言語、フレームワークはあるが、大半はうまく対応してくれる</div>
-
-- <div leading-relaxed>ただ生成AIは自立して何もないところから生み出すことはできない</div>
-
-  - <div leading-relaxed>何かしらのトリガーがないと動き出さない</div>
-  
-  - <div leading-relaxed>人間がどんなアウトプットを期待しているのかを伝えてあげないといけない</div>
-
-- <div leading-relaxed>生成AIにどんなものを作って欲しいのかという情報を、曖昧さを可能な限り排除した上でプロンプトを投げられるようにならないといけない</div>
-
-</div>
-
----
----
-
-# 高い表現能力、言語化能力
-
-<div text-2xl>
-
-- <div leading-relaxed>生成AIは人間から渡されたプロンプトから、期待されるアウトプットを生成してくれる</div>
-
-  - <div leading-relaxed>要するに入力として渡すプロンプトの質が重要</div>
-
-- <div leading-relaxed>プロンプトの質を上げるためには極論「生成AIが毎回同じ理解をしてくれるような明確な情報、曖昧さを排除した情報」を書く必要がある</div>
-
-  - <div leading-relaxed>期待するアウトプットについてうまく表現、言語化できないといけない</div>
-
-  - <div leading-relaxed>プロンプトの質で生成AIのアウトプットの質が大きく変わってくる</div>
-</div>
-
----
----
-
-# 生成AIを活用した業務・組織設計力
-
-<div text-2xl>
-
-- <div leading-relaxed>ただ生成AIを使うだけでなく、業務や組織に組み込むようなアクションが取れると、組織として強くなれる可能性がある</div>
-
-  - <div leading-relaxed>エンジニアの作業を代行する生成AIエージェントを作る</div>
-
-  - <div leading-relaxed>コーディング業務はもうDevinやClaudeCodeActionに任せて非同期で作業させる</div>
-
-- <div leading-relaxed>これはマネジメント領域に関わってくるかも知れないが、マネージャーでなくても生成AIの力で組織設計の一端を担うことができるという可能性がある</div>
-
-  - <div leading-relaxed>生成AIを活用した組織としての生産性向上の施策を考えている</div>
-
-</div>
-
----
----
-
-# 生成AIを組織に広める活動
-
-<div text-2xl>
-
-- <div leading-relaxed>生成AIをエンジニアだけが使っていても会社としては成長しない</div>
-
-- <div leading-relaxed>組織全体が生成AIを使いこなせると全体的なアウトプット量が爆増する</div>
-
-- <div leading-relaxed>そのための育成や体制づくりを引っ張っていくような姿勢が必要になってくるだろう</div>
-
-- <div leading-relaxed>弊社は生成AI合宿をしたり、そこでのアウトプットの発表会をしたりしている</div>
-
-  - <div leading-relaxed>生成AIで何ができるのかをイメージできる非エンジニアが増えてきた</div>
-
-- <div leading-relaxed>定量的に生産性を測るのは難しいが、感覚的に生産性が上がってきているように感じている</div>
-
-</div>
+<div font-bold text-5xl leading-relaxed>簡単にデモします</div>
 
 ---
 ---
@@ -330,19 +197,15 @@ layout: center
 
 <div text-2xl>
 
-- <div leading-relaxed>生成AIはエンジニアの仕事をなくすものではなく、変えるもの</div>
+- <div leading-relaxed>生成AIは便利だけど<strong>よしなにアウトプットを出すことはできない</strong>ので、コンテキストを整備したり、何を作って欲しいのかを理解させたりするのが重要</div>
 
-- <div leading-relaxed>怖がって近寄らないのではなくて、寄り添っていこう</div>
+  - <div leading-relaxed>コンテキストの中には「仕様」「ルール」「思想」など様々な情報があり、それらを生成AIが理解しやすい形で用意しておく</div>
 
-- <div leading-relaxed>相手(生成AI)のことを知って、どんな言葉を届けるとより良い仕事をしてくれるのかを考えてあげよう</div>
+  - <div leading-relaxed>アウトプットがブレないように要件定義書→設計書→タスク詳細を用意してから作業させると、かなり精度がいいアウトプットを出すことができる</div>
 
-  - <div leading-relaxed>人間関係と近しいものがある</div>
+- <div leading-relaxed>ClaudeCodeはHackableな設計なのでエンジニアリングに適した改造ができるので最大限活用しよう</div>
 
-- <div leading-relaxed>これからエンジニアの仕事や価値というのはどんどん変わっていくだろうし、その波に乗れる気持ちを持っておくことが大事</div>
-
-  - <div leading-relaxed>乗るしかない、このビックウェーブに…</div>
-
-- <div leading-relaxed font-bold>今回は表面的な話に絞ったので、もっと深い話をしたい！なので懇親会で話しましょう！</div>
+  - <div leading-relaxed>commandで作業のショートカットを用意したり、hookで自動でLintを実行させたり</div>
 
 </div>
 
